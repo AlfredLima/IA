@@ -3,6 +3,7 @@
  */
 public class Sentence {
     protected String name = null;
+    protected Boolean value = null;
     public String getName(){
         return name;
     }

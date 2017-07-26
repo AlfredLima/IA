@@ -1,22 +1,15 @@
 /**
  * Created by alfredo on 24/07/17.
  */
-public class ComplexSentence implements Sentence{
+
+public class ComplexSentence extends Sentence{
 
     Sentence left = null;
     Sentence right = null;
     Operator operator = null;
 
     public ComplexSentence( String sentence ){
-        int idx = sentence.indexOf("->");
-        if( idx == -1 ){
-
-
-            return;
-        }
-        operator = new Implies();
-        left = new ComplexSentence( sentence.substring(0,idx) );
-        right = new ComplexSentence( sentence.substring(idx+2,sentence.length()) );
+        this.name = sentence;
     }
 
     public Sentence getLeftSetence(){
@@ -31,15 +24,14 @@ public class ComplexSentence implements Sentence{
         return operator;
     }
 
-    public Boolean validation(){
-        return operator.execute(left,right);
-    }
+    public Boolean solve(Assumptions assumptions){
 
-    public Boolean isAtom(){
-        if((left == null) && (right == null)){
-            return true;
+        int idx = name.indexOf("->");
+        if( idx != -1 ) {
+            operator = new Implies();
         }
-        return false;
+        Boolean answer = operator.execute( name.substring(0,idx) ,name.substring(idx+2,name.length()),assumptions);
+        return answer;
     }
 
 }

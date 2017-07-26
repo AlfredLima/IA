@@ -1,10 +1,9 @@
 /**
  * Created by alfredo on 24/07/17.
  */
-public class Atom implements Sentence{
 
-    private Boolean value;
 
+public class Atom extends Sentence {
 
     public Atom(String name, Boolean value){
 
@@ -18,8 +17,4 @@ public class Atom implements Sentence{
         this.value = value;
     }
 
-    @Override
-    public Boolean validation() {
-        return value;
-    }
 }

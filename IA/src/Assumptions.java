@@ -1,3 +1,5 @@
+
+
 import java.util.TreeMap;
 
 /**
@@ -17,5 +19,6 @@ public class Assumptions {
     }
     public void addAtom(Atom atom){
         atoms.put(atom.name,atom);
+        sentences.put(atom.name,atom);
     }
 }
