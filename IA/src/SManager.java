@@ -5,7 +5,7 @@ import java.util.List;
  */
 public class SManager {
 
-    Assumptions assumptions;
+    Assumptions assumptions = new Assumptions();
     public SManager(List<String> assumptions, List<String> query) {
 
         for (String assumption : assumptions ) {
