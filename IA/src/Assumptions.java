@@ -5,14 +5,15 @@ import java.util.*;
 /**
  * Created by alfredo on 25/07/17.
  */
+
 public final class Assumptions {
 
     private Map< String , Sentence > sentences;
     private Map< String , Atom > atoms;
     private Queue<String> queueSolveds;
-    private Queue<Atom> tempAtoms;
-    private Queue<String> tempSolvers;
-    private Queue<Sentence> tempSentences;
+    private Set<Atom> tempAtoms;
+    private Set<String> tempSolvers;
+    private Set<Sentence> tempSentences;
     private Set<String> setAtoms;
 
     public Assumptions(){
@@ -20,9 +21,9 @@ public final class Assumptions {
         sentences = new HashMap< String , Sentence >();
         atoms = new HashMap< String , Atom >();
         queueSolveds = new LinkedList<String>();
-        tempAtoms = new LinkedList<Atom>();
-        tempSentences = new LinkedList<Sentence>();
-        tempSolvers = new LinkedList<String>();
+        tempAtoms = new HashSet<Atom>();
+        tempSentences = new HashSet<Sentence>();
+        tempSolvers = new HashSet<String>();
         setAtoms = new HashSet<String>();
 
     }
@@ -52,28 +53,22 @@ public final class Assumptions {
 
     public void solved(){
 
-        System.out.println("Solved");
-
         transfer();
 
-        System.out.println("Transfer");
         while ( !queueSolveds.isEmpty() ){
             String element = queueSolveds.poll();
             setAtoms.add(element);
             for ( String sentence : sentences.keySet() ) {
-                System.out.print("E: " + element + " - " + sentence);
                 if( sentence.contains(element) ){
-                    System.out.print(" - Check");
                     Sentence sent = sentences.get(sentence);
                     if (sent instanceof ComplexSentence ) {
-
-                        System.out.print(" - Complex");
                         ComplexSentence complexSentence = (ComplexSentence) sent;
+                        if( sent.getValue() != null )
+                            continue;
                         if( complexSentence.solve(this) )
                             complexSentence.setValue(true);
                     }
                 }
-                System.out.println();
             }
         }
         if( !tempSolvers.isEmpty() )
@@ -82,17 +77,21 @@ public final class Assumptions {
 
     private void transfer(){
 
-        while ( !tempSolvers.isEmpty() ) {
-            String e = tempSolvers.poll();
-            if( !setAtoms.contains(e) )
-                queueSolveds.add(e);
-        }
+        for ( String solved : tempSolvers )
+            if( !setAtoms.contains(solved) )
+                queueSolveds.add(solved);
 
-        while ( !tempAtoms.isEmpty() )
-            atoms.put( tempAtoms.element().name, tempAtoms.poll() );
+        tempSolvers.clear();
 
-        while ( !tempSentences.isEmpty() )
-            sentences.put( tempSentences.element().name, tempSentences.poll() );
+        for ( Atom atom : tempAtoms )
+            atoms.put( atom.name, atom );
+
+        tempAtoms.clear();
+
+        for( Sentence sentence : tempSentences )
+            sentences.put( sentence.name, sentence );
+
+        tempSentences.clear();
 
     }
 

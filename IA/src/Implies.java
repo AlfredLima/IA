@@ -14,6 +14,7 @@ public class Implies implements Operator{
             }
             assumptions.addInQueue(right);
             rightAtom.setValue(leftAtom.getValue());
+            System.out.println("Applied modus ponies: " + left + "->" + right);
             return true;
         }
         return false;
