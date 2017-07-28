@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Main {
 
-    private static final String DB = "/home/alfredolima/Workspace/IA/IA/db.txt";
-    private static final String QY = "/home/alfredolima/Workspace/IA/IA/qy.txt";
+    private static final String DB = "../db.txt";
+    private static final String QY = "../qy.txt";
 
     public static void main(String[] args) throws IOException {
         System.out.println("Init system");
@@ -25,10 +25,10 @@ public class Main {
 
         String sCurrentLine;
         while ((sCurrentLine = db.readLine()) != null) {
-            assumptions.add(sCurrentLine);
+            assumptions.add(sCurrentLine.replace(" ",""));
         }
         while ((sCurrentLine = qy.readLine()) != null) {
-            querys.add(sCurrentLine);
+            querys.add(sCurrentLine.replace(" ",""));
         }
 
         db.close();

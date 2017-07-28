@@ -7,4 +7,12 @@ public class Sentence {
     public String getName(){
         return name;
     }
+
+    public Boolean getValue() {
+        return value;
+    }
+
+    public void setValue(Boolean value) {
+        this.value = value;
+    }
 }

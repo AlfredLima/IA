@@ -12,13 +12,9 @@ public class Implies implements Operator{
                 rightAtom = new Atom(right,leftAtom.value);
                 assumptions.addAtom(rightAtom);
             }
+            assumptions.addInQueue(right);
+            rightAtom.setValue(leftAtom.getValue());
             return true;
-        }
-        else if( rightAtom != null ){
-            if( leftAtom == null ){
-                leftAtom = new Atom(left,rightAtom.value);
-                assumptions.addAtom(leftAtom);
-            }
         }
         return false;
     }

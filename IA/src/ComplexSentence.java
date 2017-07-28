@@ -30,6 +30,8 @@ public class ComplexSentence extends Sentence{
         if( idx != -1 ) {
             operator = new Implies();
         }
+
+        System.out.println( name + " Left: " + name.substring(0,idx) + " " + "Right: " + name.substring(idx+2,name.length()));
         Boolean answer = operator.execute( name.substring(0,idx) ,name.substring(idx+2,name.length()),assumptions);
         return answer;
     }
